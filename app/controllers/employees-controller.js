@@ -12,38 +12,38 @@ app.controller('employeesController', function($scope, $location, $http, appConf
 		$http({
 			    method: 'GET',
 			    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
-			    url: 'https://'+ appConfig.domain + '/employees',
+			    url: appConfig.proxy+'://'+ appConfig.domain + '/employees',
 			    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 		})
 		.success(function(employees, status, headers, config) {
 			console.log(employees);
-			if(employees.data.length < 1){
+			if(employees.length < 1){
 				$scope.no_employees = true;
 			}
 
 			var columns = [
-			    {"sTitle":"badge_encode_number", "mData":"badge_encode_number"},
+			    {"sTitle":"Badge Number", "mData":"badge_encode_number"},
 			    {"sTitle":"email", "mData":"email"},
 			    {"sTitle":"job_title", "mData":"job_title"},
 			    {"sTitle":"name_suffix", "mData":"name_suffix"},
 			    {"sTitle":"first_name", "mData":"first_name"},
-			    {"sTitle":"middle_name", "mData":"middle_name"},
+			    {"sTitle":"Middle Initial", "mData":"middle_name"},
 			    {"sTitle":"last_name", "mData":"last_name"},
 			    {"sTitle":"location_code", "mData":"location_code"},
 			    {"sTitle":"location_description", "mData":"location_description"},
-			    {"sTitle":"ccf_mail_code", "mData":"ccf_mail_code"},
+			    {"sTitle":"CCF Mail Code", "mData":"ccf_mail_code"},
 			    {"sTitle":"division", "mData":"division"},
-			    {"sTitle":"department_name", "mData":"department_name"},
-			    {"sTitle":"supervisor_firt_name", "mData":"supervisor_firt_name"},
-			    {"sTitle":"supervisor_last_name", "mData":"supervisor_last_name"},
-			    {"sTitle":"hire_date", "mData":"hire_date"},
-			    {"sTitle":"termination_date", "mData":"termination_date"},
-			    {"sTitle":"tag_number", "mData":"tag_number"}
+			    {"sTitle":"Department Name", "mData":"department_name"},
+			    {"sTitle":"Supervisor Fn", "mData":"supervisor_firt_name"},
+			    {"sTitle":"Supervisor Ln", "mData":"supervisor_last_name"},
+			    {"sTitle":"Hire Date", "mData":"hire_date"},
+			    {"sTitle":"Termination Date", "mData":"termination_date"},
+			    {"sTitle":"Tag Number", "mData":"tag_number"}
 			];
 
 			//CreateTime, Begin Time, ExpiryTime, Suite ID, First Name, Last Name, Phone, Email, LPN, Make, Model, Color, PermitTag
 			$('#employees-table').dataTable({
-		        "data": employees.data,
+		        "data": employees,
 		        "columns":columns
       //           "columnDefs": [
       //           	{

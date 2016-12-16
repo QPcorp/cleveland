@@ -9,13 +9,11 @@
 			</section>
 			<section id="content">
 				<div class="col-sm-12">
-					<h4>User Profile Settings</h4>
+					<h4>Employee Information</h4>
 					<form class="basic" name="userProfile" >
-						<label>Suite Id</label>
+						<label>Badge Number</label>
 						<input type="text" class="form-control input-md m-b-s" ng-model="employee.suite_id" placeholder="2100" required/>
-						<label>Number of Permits Allowed</label>
-						<input type="number" class="form-control input-md m-b-s" ng-model="employee.permits_allowed" placeholder="4" required/>
-						<label>Username</label>
+						<label>Job Title</label>
 						<input type="text" class="form-control input-md m-b-s" ng-model="employee.user" placeholder="2100user" required/>
 						<label>First Name</label>
 						<input type="text" class="form-control input-md m-b-s" ng-model="employee.first_name" placeholder="John" required/>
@@ -25,7 +23,6 @@
 						<input type="text" class="form-control input-md m-b-s" numbers-only minlength=10 ng-model="employee.phone" placeholder="2145602323" required />
 						<label>Email Address</label>
 						<input type="text" class="form-control input-md m-b-s" ng-model="employee.email" placeholder="example@gmail.com" required/>
-						<p class="blue"><strong>**Note: The employee will recieve an email to set their password</strong></p>
 						<small class="red" ng-show="error_text"><strong>{{error_text}} - Check for email under employees.</strong></small>
 <!-- 						<div class="change-password m-t-m">
 							<label>Password</label><br>
@@ -33,7 +30,7 @@
 							<input ng-show="password_input" type="text" class="form-control input-md" ng-model="employee.password" placeholder="New Password" />
 						</div> -->
 					</form>
-					<button class="btn btn-primary m-t-m" ng-disabled="userProfile.$invalid || userProfile.$pristine" ng-click="add_employee()">Add Resident</button>
+					<button class="btn btn-primary m-t-m" ng-disabled="userProfile.$invalid || userProfile.$pristine" ng-click="add_employee()">Add Employee</button>
 				</div>
 			</section>
 		</div>
