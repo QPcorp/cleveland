@@ -1,0 +1,55 @@
+<div class="col-sm-12">
+	<div class="col-sm-7 col-sm-offset-3">
+		<div class="col-sm-12 login-box animated fadeInUp">
+			<div class="logo-box">
+				<!-- <h3>Welcome to the HotelPark System</h3> -->
+				<img src="assets/img/Cleveland-Clinic1.jpg" alt="Cleveland Clinic Logo"/>
+			</div>
+			<div class="col-sm-7">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</div>
+			<div class="col-sm-5" ng-controller="loginController as login">
+				<form ng-hide="password_forgot" ng-submit="auth(login)">
+				<p ng-show="login_error" class="login-error">Wrong Username or Password</p>
+				  <div class="form-group">
+<!-- 				    <label for="username">Username</label> -->
+				    <input type="text" class="login-input" id="username" placeholder="Username" ng-model="login.username">
+				  </div>
+				  <div class="form-group">
+<!-- 				    <label for="password">Password</label> -->
+				    <input type="password" class="login-input" id="password" placeholder="Password" ng-model="login.password">
+				  </div>
+				  <button type="submit" class="btn-paper paper-flatten">Login</button>
+				</form>
+				<div class="form-group" ng-show="password_forgot && password_email === false">
+<!-- 				    <label for="username">Username</label> -->
+				<p class="center">
+					<small class="red" ng-show="user_error">No user exists with this email.</small>
+				</p>
+				 <input type="text" class="login-input"  placeholder="Email" ng-model="login_forgot.email" required>
+				 <button class="btn-paper paper-flatten" ng-click="forgot_password()">Submit</button>
+				 <p class="center"><a ng-click="password_forgot = false">Cancel</a></p>
+				</div>
+				<div ng-show="password_email && password_forgot">
+					<p>An email has been sent with a link to reset your password</p>
+					<p class="center m-t-m"><a ng-click="reload()">Log Back In</a></p>
+				</div>
+				<p class="center"><a ng-hide="password_forgot" ng-click="password_forgot = true">Forgot Password</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="wrapper">
+	<ul class="bg-bubbles">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</div>

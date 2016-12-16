@@ -1,0 +1,25 @@
+<!-- Sidebar -->
+<section ng-controller="navController">
+    <!-- <p class="menu-icon" ng-click="menu()"><span class="menu-close">&#10005;</span></p> -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav" >
+            <li class="sidebar-brand white">Cleveland Clinic</li>
+            <li>
+                <a href="#/find-employee">Find Employee</a>
+            </li>
+            <li>
+                <a href="#/employees">Employees</a>
+            </li>
+            <li>
+                <a href="#/add-employee">Add Employee</a>
+            </li>
+<!--             <li ng-if="admin_show">
+                <a href="#/remove-permit">Remove Permit</a>
+            </li> -->
+            <li>
+                <a href="/#/" ng-click="logout()">Logout</a>
+            </li>
+        </ul>
+    </div>
+</section>
+<!-- /#sidebar-wrapper -->

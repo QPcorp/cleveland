@@ -1,0 +1,58 @@
+<div id="wrapper" ng-controller="findEmployeeController">
+	<div ng-include="'app/templates/navbar.html'"></div>
+		<div class="container-fluid">
+			<section id="header">
+				<div class="col-sm-12">
+					<h1>Find Employee</h1>
+					<p>Locate an employee record.</p>
+				</div>
+			</section>
+			<section id="content">
+				<div class="visitor-info col-sm-12">
+					<h4 class="inline">Employee Information</h4><br>
+					<div class="row">
+						<div class="col-sm-3">
+							<label for="suite-num">Employee ID:</label><small class="red m-l-s">*</small><br>
+							<input class="form-control input-md m-b-s inline" name="suite-num" ng-model="employee.data.vistor_suite" placeholder="4109" required/><br>
+						</div>
+						<div class="col-sm-3">
+							<label for="guest-fullname">First Name:</label><br>
+							<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.first_name" placeholder="First Name"/>
+						</div>
+						<div class="col-sm-3">
+							<label for="guest-fullname">Last Name:</label><br>
+							<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.last_name" placeholder="Last Name"/>
+						</div>
+						<div class="col-sm-3">
+							<label for="vehicle-license">License Plate Number:</label><small class="red m-l-s">*</small><br>
+							<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="col-sm-3">
+							<label for="vehicle-make">AVI Number:</label>
+							<input class="form-control input-md m-b-s" name="vehicle-make" ng-model="employee.data.vehicle_make" placeholder="123456ABC"/>
+						</div>
+						<div class="col-sm-3">
+							<label for="vehicle-model">Sticker Number:</label>
+							<input class="form-control input-sm m-b-s" name="vehicle-model" ng-model="employee.data.vehicle_model" placeholder="ABC123456"/>
+						</div>
+						<div class="col-sm-3">
+							<label for="primary-company">Primary Company:</label>
+							<input class="form-control input-md m-b-m" name="primary-company" ng-model="employee.data.vehicle_color" placeholder="Company A"/>
+						</div>
+						<div class="col-sm-3">
+							<label for="primary-company">Alternative Company:</label>
+							<input class="form-control input-md m-b-m" name="primary-company" ng-model="employee.data.vehicle_color" placeholder="Company B"/>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 employee-controls">
+					<button class="btn btn-primary" ng-click="employee.search()" ng-disabled="employee.next">Search</button>
+					<hr>
+				</div>
+			</section>
+		</div>
+</div>
