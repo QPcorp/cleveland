@@ -1,0 +1,235 @@
+<div id="wrapper" ng-controller="employeeController">
+	<div ng-include="'app/templates/navbar.html'"></div>
+		<div class="container-fluid">
+			<section id="header">
+				<div class="col-sm-12">
+					<h1>Employee Details</h1>
+					<p>View details over a particular employee below.</p>
+				</div>
+			</section>
+			<section id="content">
+				<div class="col-sm-12">
+					<div class="container-fluid">
+					  <ul class="nav nav-tabs">
+					    <li ng-class="{'active': tab == 1}"><a data-toggle="tab" ng-click="tab = 1">Parking Assignment</a></li>
+					    <li ng-class="{'active': tab == 2}"><a data-toggle="tab" ng-click="tab = 2">Vehicle Information</a></li>
+					    <li ng-class="{'active': tab == 3}"><a data-toggle="tab" ng-click="tab = 3">HR Information</a></li>
+					    <li ng-class="{'active': tab == 4}"><a data-toggle="tab" ng-click="tab = 4">Billing Information</a></li>
+					     <li ng-class="{'active': tab == 5}"><a data-toggle="tab" ng-click="tab = 5">Credentials</a></li>
+					  </ul>
+
+					  <div class="tab-content">
+					    <div id="home" class="tab-pane fade in active" ng-class="{'active': tab == 1}">
+					      <div class="row m-t-m">
+								<div class="col-sm-3">
+									<label for="suite-num">Primary Shift:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-md m-b-s inline" name="suite-num" ng-model="employee.data.vistor_suite" placeholder="4109" required/><br>
+								</div>
+								<div class="col-sm-3">
+									<label for="vehicle-license" >Shift Start:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-3">
+									<label for="vehicle-license">Shift End:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-3">
+									<label for="guest-fullname">Job Type:</label><br>
+									<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.first_name" placeholder="First Name"/>
+								</div>
+								<div class="col-sm-3">
+									<label for="guest-fullname">Monthly Fee:</label><br>
+									<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.last_name" placeholder="Last Name"/>
+								</div>
+								<div class="col-sm-3">
+									<label for="guest-fullname">Discount Code:</label><br>
+									<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.last_name" placeholder="Last Name"/>
+								</div>
+								<div class="col-sm-3">
+									<label for="guest-fullname">Form of Payment:</label><br>
+									<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.last_name" placeholder="Payroll"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<label for="vehicle-license">Primary Assignment:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-3">
+									<label for="vehicle-license">Temporary Assignment:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<label for="parking-assignment-notes">Notes:</label><small class="red m-l-s">*</small><br>
+									<textarea class="form-control parking-assignment-notes"></textarea>
+								</div>
+								<div class="col-sm-12 m-t-m">
+									<button class="btn btn-primary">Update</button>
+								</div>
+							</div>
+						</div> <!-- END OF TAB -->
+					    <div class="tab-pane fade" ng-class="{'active in': tab == 2}">
+							<div class="row m-t-m">
+								<div class="col-sm-8">
+									<table id="employee-vehicles" class="table table-striped table-bordered dataTable no-footer"></table>
+								</div>
+								<div class="col-sm-4 right-input">
+									<h3>Vehicle Inputs</h3>
+									<div class="col-sm-12">
+										<label for="guest-fullname">State:</label><br>
+										<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.first_name" placeholder="State"/>
+									</div>
+									<div class="col-sm-12">
+										<label for="guest-fullname">Vehicle Type:</label><br>
+										<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.last_name" placeholder="Car"/>
+									</div>
+									<div class="col-sm-6">
+										<label for="vehicle-license">Make:</label><small class="red m-l-s">*</small><br>
+										<input class="form-control m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="Honda"/><br>
+									</div>
+									<div class="col-sm-6">
+										<label for="vehicle-license">Model:</label><small class="red m-l-s">*</small><br>
+										<input class="form-control m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="Civic"/><br>
+									</div>
+									<div class="col-sm-6">
+										<label for="vehicle-license">Color:</label><small class="red m-l-s">*</small><br>
+										<input class="form-control m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="Black"/><br>
+									</div>
+									<div class="col-sm-6">
+										<label for="vehicle-license">Year:</label><small class="red m-l-s">*</small><br>
+										<input class="form-control m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="2008"/><br>
+									</div>
+									<div class="col-sm-12">
+										<label for="vehicle-license">AVI Sticker Number:</label><small class="red m-l-s">*</small><br>
+										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="123456"/><br>
+									</div>
+									<div class="col-sm-12">
+										<label for="vehicle-license">Sticker #:</label><small class="red m-l-s">*</small><br>
+										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="0001234"/><br>
+									</div>
+									<div class="center">
+										<button class="btn btn-primary">Add Vehicle</button>
+									</div>
+								</div>
+							</div>
+					    </div>
+					    <div class="tab-pane fade" ng-class="{'active fade in': tab == 3}">
+					      <div class="row m-t-m">
+								<div class="col-sm-3">
+									<label for="suite-num">HRMS Org Id:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-md m-b-s inline" name="suite-num" ng-model="employee.data.vistor_suite" placeholder="4109" required/><br>
+								</div>
+								<div class="col-sm-3">
+									<label for="vehicle-license" >Devision:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-3">
+									<label for="vehicle-license">Department:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-3">
+									<label for="guest-fullname">Job Code:</label><br>
+									<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.first_name" placeholder="First Name"/>
+								</div>
+								<div class="col-sm-3">
+									<label for="guest-fullname">Job Title:</label><br>
+									<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.last_name" placeholder="Last Name"/>
+								</div>
+								<div class="col-sm-3">
+									<label for="guest-fullname">Mail Code:</label><br>
+									<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.last_name" placeholder="Last Name"/>
+								</div>
+								<div class="col-sm-3">
+									<label for="guest-fullname">Email:</label><br>
+									<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.last_name" placeholder="Payroll"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<label for="vehicle-license">Hire Date:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-3">
+									<label for="vehicle-license">Termination Code:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-3">
+									<label for="vehicle-license">Employment Status:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-3">
+									<label for="vehicle-license">Employment Type:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12 m-t-m">
+									<button class="btn btn-primary">Update</button>
+								</div>
+							</div>
+					    </div> <!-- END OF TAB -->
+					    <div class="tab-pane fade" ng-class="{'active in': tab == 4}">
+					      	<div class="row m-t-m">
+								<div class="col-sm-4">
+									<label for="vehicle-license">Trans Type:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-md m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-4">
+									<label for="vehicle-license">Trans Amount:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-md m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-4">
+									<label for="vehicle-license">Trans Date:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-md m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12 m-t-m">
+									<button class="btn btn-primary">Submit</button>
+								</div>
+							</div>
+					    </div>
+					    <div class="tab-pane fade" ng-class="{'active in': tab == 5}">
+					      <div class="row m-t-m">
+								<div class="col-sm-4">
+									<label for="vehicle-license">Credential ID:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-md m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123" style="width:280px;" /><br>
+								</div>
+								<div class="col-sm-4">
+									<label for="vehicle-license">Credential Validity:</label><small class="red m-l-s">*</small><br>
+									<select class="form-control">
+										<option value="">Select Validity</option>
+										<option value="issued">Issued</option>
+									</select>
+								</div>
+								<div class="col-sm-4">
+									<label for="vehicle-license">Encode #:</label><small class="red m-l-s">*</small><br>
+									<input class="form-control input-md m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+								</div>
+								<div class="col-sm-4">
+									<label for="vehicle-license">Pass Back:</label><small class="red m-l-s">*</small><br>
+									<div class="col-sm-4">
+										<input class="m-r-s" type="radio" nam="passback" /><span>Soft</span>
+									</div>
+									<div class="col-sm-4">
+										<input class="m-r-s" type="radio" nam="passback" /><span>Hard</span>
+									</div>
+									<div class="col-sm-4">
+										<input class="m-r-s" type="radio" nam="passback" /><span>None</span>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12 m-t-m">
+									<button class="btn btn-primary">Submit</button>
+								</div>
+							</div>
+					    </div>
+					  </div>
+					</div>
+				</div>
+			</section>
+		</div>
+</div>

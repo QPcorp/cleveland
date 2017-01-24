@@ -51,15 +51,15 @@ Twitter: @Smartass_io
   transition: all 0.5s ease; }
 
 #wrapper.toggled {
-  padding-left: 250px; }
+  padding-left: 200px; }
 
 #sidebar-wrapper {
   z-index: 1000;
   position: fixed;
-  left: 250px;
+  left: 200px;
   width: 0;
   height: 100%;
-  margin-left: -250px;
+  margin-left: -200px;
   overflow-y: auto;
   background: #51ACDB;
   background: -webkit-linear-gradient(top left, #337ab7 0%, #51acdb 100%);
@@ -70,7 +70,7 @@ Twitter: @Smartass_io
   transition: all 0.5s ease; }
 
 #wrapper.toggled #sidebar-wrapper {
-  width: 250px; }
+  width: 200px; }
 
 #page-content-wrapper {
   width: 100%;
@@ -90,7 +90,7 @@ Twitter: @Smartass_io
 .sidebar-nav {
   position: absolute;
   top: 0;
-  width: 250px;
+  width: 200px;
   margin: 0;
   padding: 0;
   list-style: none; }
@@ -128,13 +128,13 @@ Twitter: @Smartass_io
 
 @media (min-width: 768px) {
   #wrapper {
-    padding-left: 250px; }
+    padding-left: 200px; }
 
   #wrapper.toggled {
     padding-left: 0; }
 
   #sidebar-wrapper {
-    width: 250px; }
+    width: 200px; }
 
   #wrapper.toggled #sidebar-wrapper {
     width: 0; }
@@ -585,8 +585,10 @@ a[ng-click] {
 
 .navbar-brand {
   padding: 5px 30px;
-  max-width: 250px;
+  max-width: 200px;
   border-right: 1px solid #51ACDB; }
+  .navbar-brand img {
+    padding-top: 7px; }
 
 .navbar-right {
   margin-right: 30px; }
@@ -898,6 +900,12 @@ table.dataTable thead > tr > th, table.dataTable tbody > tr > td {
   margin-right: 20px; }
   .lot-list > li span {
     margin-left: 5px; }
+
+.right-input {
+  border-left: 1px solid #eee; }
+
+.parking-assignment-notes {
+  min-height: 150px; }
 
 /*------------------- old code ---------------------- */
 .panel1 {

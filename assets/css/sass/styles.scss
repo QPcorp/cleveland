@@ -402,9 +402,10 @@ a[ng-click]{
 
 .navbar-brand{
   padding:5px 30px;
-  max-width:250px;
+  max-width:200px;
   border-right: 1px solid #51ACDB;
   img{
+    padding-top:7px;
     //width:34%;
     //margin-left:20px;
   }
@@ -789,6 +790,17 @@ table.dataTable thead > tr > th, table.dataTable tbody > tr > td {
     }
 }
 
+
+
+.right-input{
+  border-left:1px solid #eee;
+}
+
+.parking-assignment-notes{
+  min-height:150px;
+}
+
+
 /*------------------- old code ---------------------- */
 
 
@@ -810,3 +822,6 @@ $color2: #eee;
 .ng-valid.ng-dirty{
 	border-color:#78FA89;
 }
+
+
+
