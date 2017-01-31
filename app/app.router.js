@@ -22,9 +22,12 @@ app.config(function($routeProvider) {
             controller  : 'employeesController'
         })
 
+        .when('/violations', {
+            templateUrl : 'app/templates/violations.html',
+        })
+
         .when('/employee/:id', {
             templateUrl : 'app/templates/employee.html',
-            controller  : 'employeeController'
         })
 
         .when('/add-employee', {
