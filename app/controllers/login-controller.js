@@ -11,7 +11,7 @@ app.controller('loginController', function($scope, $location, $http, $rootScope,
 
 		$http({
 		    method: 'GET',
-		    url: appConfig.proxy+'://'+ appConfig.domain +'/login', //dev.csr-api.locomobi.com:2950/login'
+		    url: appConfig.proxy+':dev.csr-api.locomobi.com:2950/login', + ////'+ appConfig.domain +'/login', //
 		    //data: login,
 		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + auth}
 		})
@@ -44,6 +44,8 @@ app.controller('loginController', function($scope, $location, $http, $rootScope,
 		})
 		.error(function(data, status, headers, config) {
 			$scope.login_error = true;
+			//Direct User to Dashboard
+			$location.path("/find-employee");
 		});
 		// .finally(function(data){
 		// 	if(data.code == "401"){
