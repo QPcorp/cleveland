@@ -11,7 +11,7 @@ app.controller('loginController', function($scope, $location, $http, $rootScope,
 
 		$http({
 		    method: 'GET',
-		    url: appConfig.proxy+':dev.csr-api.locomobi.com:2950/login', + ////'+ appConfig.domain +'/login', //
+		    url: appConfig.proxy+':dev.csr-api.locomobi.com:2950/login', ////'+ appConfig.domain +'/login', //
 		    //data: login,
 		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + auth}
 		})
