@@ -3,7 +3,7 @@ app.controller('navController', function($scope, $location, $rootScope, $cookieS
 
 	$scope.user = $rootScope.user.info;
 
-
+	$scope.user = {};
 	if($scope.user.user_type == 'master' || $scope.user.user_type == 'admin'){
 		$scope.admin_show = true;
 	}

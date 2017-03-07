@@ -7,7 +7,7 @@
 					<p>Locate an employee record.</p>
 				</div>
 			</section>
-			<section id="content">
+			<section id="content" ng-form name="employeeSearchForm">
 				<div class="visitor-info col-sm-12">
 					<h4 class="inline">Employee Information</h4><br>
 					<div class="row">
@@ -49,9 +49,22 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-sm-12">
+					<div class="col-sm-3">
+							<label for="vehicle-make">Department:</label>
+							<input class="form-control input-md m-b-s" name="vehicle-make" ng-model="employee.data.vehicle_make" placeholder="123456ABC"/>
+						</div>
+						<div class="col-sm-3">
+							<label for="vehicle-model">Employee ID:</label>
+							<input class="form-control input-sm m-b-s" name="vehicle-model" ng-model="employee.data.vehicle_model" placeholder="ABC123456"/>
+						</div>
+				</div>
 				<div class="col-md-12 employee-controls">
-					<button class="btn btn-primary" ng-click="employee.search()" ng-disabled="employee.next">Search</button>
+					<button class="btn btn-primary" ng-click="search(employee)" ng-disabled="employeeSearchForm.$pristine">Search</button>
 					<hr>
+				</div>
+				<div class="col-sm-12 m-t-m">
+					<table id="employees-table" class="table table-striped table-bordered" cellspacing="0" width="100%"></table>
 				</div>
 			</section>
 		</div>
