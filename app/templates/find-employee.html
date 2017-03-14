@@ -7,62 +7,83 @@
 					<p>Locate an employee record.</p>
 				</div>
 			</section>
-			<section id="content" ng-form name="employeeSearchForm">
-				<div class="visitor-info col-sm-12">
-					<h4 class="inline">Employee Information</h4><br>
-					<div class="row">
-						<div class="col-sm-3">
-							<label for="suite-num">Employee ID:</label><small class="red m-l-s">*</small><br>
-							<input class="form-control input-md m-b-s inline" name="suite-num" ng-model="employee.data.vistor_suite" placeholder="4109" required/><br>
-						</div>
-						<div class="col-sm-3">
-							<label for="guest-fullname">First Name:</label><br>
-							<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.first_name" placeholder="First Name"/>
-						</div>
-						<div class="col-sm-3">
-							<label for="guest-fullname">Last Name:</label><br>
-							<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="employee.data.last_name" placeholder="Last Name"/>
-						</div>
-						<div class="col-sm-3">
-							<label for="vehicle-license">License Plate Number:</label><small class="red m-l-s">*</small><br>
-							<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-12">
-					<div class="row">
-						<div class="col-sm-3">
-							<label for="vehicle-make">AVI Number:</label>
-							<input class="form-control input-md m-b-s" name="vehicle-make" ng-model="employee.data.vehicle_make" placeholder="123456ABC"/>
-						</div>
-						<div class="col-sm-3">
-							<label for="vehicle-model">Sticker Number:</label>
-							<input class="form-control input-sm m-b-s" name="vehicle-model" ng-model="employee.data.vehicle_model" placeholder="ABC123456"/>
-						</div>
-						<div class="col-sm-3">
-							<label for="primary-company">Primary Company:</label>
-							<input class="form-control input-md m-b-m" name="primary-company" ng-model="employee.data.vehicle_color" placeholder="Company A"/>
-						</div>
-						<div class="col-sm-3">
-							<label for="primary-company">Alternative Company:</label>
-							<input class="form-control input-md m-b-m" name="primary-company" ng-model="employee.data.vehicle_color" placeholder="Company B"/>
+			<section id="content">
+				<form name="employeeSearchForm">
+					<div class="visitor-info col-sm-12">
+						<h4 class="inline">Employee Information</h4><br>
+						<div class="row">
+							<div class="col-sm-2">
+								<label for="suite-num">Employee Number:</label><br>
+								<input class="form-control input-md m-b-m inline" name="suite-num" ng-model="employee.data.employee_number" placeholder="4109"/><br>
+							</div>
+							<div class="col-sm-2">
+								<label for="guest-fullname">First Name:</label><br>
+								<input class="form-control input-md m-b-m inline" name="guest-fullname" ng-model="employee.data.first_name" placeholder="First Name"/>
+							</div>
+							<div class="col-sm-2">
+								<label for="guest-fullname">Last Name:</label><br>
+								<input class="form-control input-md m-b-m inline" name="guest-fullname" ng-model="employee.data.last_name" placeholder="Last Name"/>
+							</div>
+							<div class="col-sm-2">
+								<label for="vehicle-license">License Plate Number:</label><br>
+								<input class="form-control input-md m-b-m inline" name="vehicle-license" ng-model="employee.data.vehicle_license" placeholder="ABC123"/><br>
+							</div>
+							<div class="col-sm-2">
+								<label for="vehicle-license">Parking Assignment ID:</label><br>
+								<input class="form-control input-md m-b-m inline" name="vehicle-license" ng-model="employee.data.primary_assignment_id" placeholder="12820"/><br>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-12">
-					<div class="col-sm-3">
-							<label for="vehicle-make">Department:</label>
-							<input class="form-control input-md m-b-s" name="vehicle-make" ng-model="employee.data.vehicle_make" placeholder="123456ABC"/>
+					<div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-2">
+								<label for="primary-company">Email Address:</label>
+								<input type="email" class="form-control input-md m-b-m" name="primary-company" ng-model="employee.data.email_address" placeholder="example@gmail.com"/>
+							</div>
+							<div class="col-sm-2">
+								<label for="primary-company">Company:</label>
+								<input class="form-control input-md m-b-m" name="primary-company" ng-model="employee.data.company" placeholder="Company A"/>
+							</div>
+							<div class="col-sm-2">
+								<label for="vehicle-make">AVI Number:</label>
+								<input class="form-control input-md m-b-m" name="vehicle-make" ng-model="employee.data.avi_number" placeholder="123456ABC"/>
+							</div>
+							<div class="col-sm-2">
+								<label for="vehicle-model">Sticker Number:</label>
+								<input class="form-control input-md m-b-m" name="vehicle-model" ng-model="employee.data.sticker_number" placeholder="ABC123456"/>
+							</div>
+							<div class="col-sm-2">
+								<label for="vehicle-model">Badge Number:</label>
+								<input class="form-control input-md m-b-s" name="vehicle-model" ng-model="employee.data.badge_encode_number" placeholder="ABC123456"/>
+							</div>
 						</div>
-						<div class="col-sm-3">
-							<label for="vehicle-model">Employee ID:</label>
-							<input class="form-control input-sm m-b-s" name="vehicle-model" ng-model="employee.data.vehicle_model" placeholder="ABC123456"/>
+					</div>
+					<div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-2">
+								<label for="vehicle-make">Department:</label>
+								<input class="form-control input-md m-b-s" name="vehicle-make" ng-model="employee.data.department_name" placeholder="123456ABC"/>
+							</div>
+							<div class="col-sm-2">
+								<label for="supervisor">Supervisor First Name:</label>
+								<input class="form-control input-md m-b-s" name="vehicle-model" ng-model="employee.data.supervisor_first_name" placeholder="ABC123456"/>
+							</div>
+							<div class="col-sm-2">
+								<label for="supervisor">Supervisor Last Name:</label>
+								<input class="form-control input-md m-b-s" name="vehicle-model" ng-model="employee.data.supervisor_last_name" placeholder="ABC123456"/>
+							</div>
+							<div class="col-sm-2">
+								<label for="supervisor_employee_id">Supervisor Employee ID:</label>
+								<input class="form-control input-md m-b-s" name="supervisor_employee_id" ng-model="employee.data.supervisor_employee_id" placeholder="ABC123456"/>
+							</div>
+							
 						</div>
-				</div>
-				<div class="col-md-12 employee-controls">
-					<button class="btn btn-primary" ng-click="search(employee)" ng-disabled="employeeSearchForm.$pristine">Search</button>
-					<hr>
-				</div>
+					</div>
+					<div class="col-md-12 m-t-s employee-controls">
+						<input type="submit" class="btn btn-primary" ng-click="search(employee)" value="Search" ng-disabled="employeeSearchForm.$pristine"></input>
+						<hr>
+					</div>
+				</form>
 				<div class="col-sm-12 m-t-m">
 					<table id="employees-table" class="table table-striped table-bordered" cellspacing="0" width="100%"></table>
 				</div>

@@ -11,7 +11,7 @@ app.controller('loginController', function($scope, $location, $http, $rootScope,
 
 		$http({
 		    method: 'GET',
-		    url: 'https://dev-csr-clevelandclinic.locomobi.com/login', ////'+ appConfig.domain +'/login', //
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/login',
 		    //data: login,
 		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + auth}
 		})
