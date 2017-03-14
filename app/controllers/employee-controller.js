@@ -9,8 +9,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 
 	$http({
 	    method: 'GET',
-	    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
-	    url: appConfig.proxy+'://'+ appConfig.domain + '/employees/' + employee_id,
+	    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id,
 	    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 	})
 	.success(function(data, status, headers, config) {
@@ -22,13 +21,46 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	});
 
 
+	function getEmployeeNotes(){
+		$http({
+		    method: 'GET',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id + '/notes',
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			$scope.notes = data;
+			console.log('NOTES', data);
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	}
+
+	getEmployeeNotes();
+
+	$scope.addEmployeeNote = function(){
+		var employee_note_data = {
+			"body": "Overtime exempt under Ohio state law.",
+		};
+
+		$http({
+		    method: 'POST',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id + '/notes',
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			$scope.notes = data;
+			console.log('NOTES', data);
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
 //Vehicles Tab
-
-
 	$http({
 	    method: 'GET',
-	    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
-	    url: appConfig.proxy+'://'+ appConfig.domain + '/lpn/employee/' + employee_id,
+	    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id + '/vehicles',
 	    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 	})
 	.success(function(vehicles, status, headers, config) {
@@ -68,8 +100,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 			var vehicle_id = $(this).data('vehicle');
 			$http({
 			    method: 'GET',
-			    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
-			    url: appConfig.proxy+'://'+ appConfig.domain + '/lpn/' + vehicle_id,
+			    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/',//vehicle_id,
 			    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 			})
 			.success(function(data, status, headers, config) {
@@ -106,34 +137,35 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	$http({
 	    method: 'GET',
 	    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
-	    url: appConfig.proxy+'://'+ appConfig.domain + '/violations',
+	    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/'+ employee_id +'/violations',
 	    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 	})
-	.success(function(vehicles, status, headers, config) {
-		console.log(vehicles);
+	.success(function(violations, status, headers, config) {
+		console.log('VIOLATIONS',violations);
 		var columns = [
-		    {"sTitle":"License Plate", "mData":"lpn"},
-		    {"sTitle":"Type", "mData":"type"},
-		    {"sTitle":"Employee Id", "mData":"employee_id"},
-		    {"sTitle":"Date", "mData":"date"},
-		    {"sTitle":"Time", "mData":"time"},
-		    {"sTitle":"Description", "mData":"description"},
+		    {"sTitle":"Violation Date", "mData":"violation_date"},
+		    {"sTitle":"Violation Number", "mData":"violation_number"},
+		    {"sTitle":"Violation Type", "mData":"violation_type_id"},
+		    {"sTitle":"Payment Status", "mData":"payment_status"},
+		    {"sTitle":"Amount", "mData":"violation_amount"},
 		    {"sTitle":"Actions", "sClass":"violation-details"}
 		];
 
 		//CreateTime, Begin Time, ExpiryTime, Suite ID, First Name, Last Name, Phone, Email, LPN, Make, Model, Color, PermitTag
 		$('#violations').dataTable({
-	        "data": vehicles,
+	        "data": violations,
 	        "columns":columns,
             "columnDefs": [
-            		{
-		            	"targets": 6,
-						"data": function ( row, type, val, meta ) {
-		            		return '<button class="btn btn-sm btn-default violation-details" data-violation="'+row.id+'">View Details</button></a>';
-	            		}
-	            	}
+        		{
+	            	"targets": 5,
+					"data": function ( row, type, val, meta ) {
+	            		return '<button class="btn btn-sm btn-default violation-details" data-violation="'+row.id+'">View Details</button></a>';
+            		}
+            	}
 	        ]
 	    });
+
+
 	    $('#violations').on('click', '.violation-details', function(){
 			var violation_id = $(this).data('violation');
 			console.log(violation_id);
