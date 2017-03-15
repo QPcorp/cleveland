@@ -15,9 +15,8 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	})
 	.success(function(data, status, headers, config) {
 		$scope.employee = data;
-		console.log($scope.employee);
 		$scope.employee.primary_assignment = $scope.employee.primary_assignment || "0";
-		console.log($scope.employee);
+		console.log('EMPLOYEE', $scope.employee);
 	})
 	.error(function(data, status, headers, config) {
 		console.log(data);
@@ -110,11 +109,59 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 			console.log(data);
 		});
 	};
+
+	$scope.getViolationTypes = function(){
+		$http({
+		    method: 'GET',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/violations/types',
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			$scope.violation_types = data;
+
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+	$scope.getViolationActions = function(){
+		$http({
+		    method: 'GET',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/violations/actions',
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			$scope.violation_actions = data;
+
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+	$scope.getViolationAmounts = function(){
+		$http({
+		    method: 'GET',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/violations/amounts',
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			$scope.violation_amounts = data;
+
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
 	
 
 	$scope.getPrimaryAssignment();
 	$scope.getVehicleTypes();
 	$scope.getVehicleModels();
+	$scope.getViolationTypes();
+	$scope.getViolationActions();
+	$scope.getViolationAmounts();
 
 
 
@@ -125,7 +172,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 	})
 	.success(function(vehicles, status, headers, config) {
-		console.log(vehicles);
+		console.log('VEHICLES', vehicles);
 		var columns = [
 		    {"sTitle":"License Plate", "mData":"lpn"},
 		    {"sTitle":"Type", "mData":"type"},

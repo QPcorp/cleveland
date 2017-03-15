@@ -7,7 +7,7 @@ var config = {
 };
 
 //Starting the Angular app
-var app = angular.module('cleveland', ['ngRoute','ngCookies']);
+var app = angular.module('cleveland', ['ngRoute','ngCookies', 'moment-picker']);
 
 //Sets the App Configuration
 app.constant("appConfig", config);
