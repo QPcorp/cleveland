@@ -62,8 +62,11 @@
 										<br>
 									</div>
 									<div class="col-sm-3">
-										<label for="vehicle-license">Temporary Assignment:</label><br>
-										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.temporary_assignment" placeholder="32"/><br>
+										<label for="vehicle-license">Secondary Assignment:</label><br>
+										<select class="form-control" ng-model="employee.secondary_assignment_id">
+											<option value="0">Select Primary Assignment</option>
+											<option ng-repeat="primary_assignment in primary_assignments" value="{{primary_assignment.id}}">{{primary_assignment.name}}</option>
+										</select>
 									</div>
 									<div class="col-sm-3">
 										<label for="vehicle-license">Temporary Start Date:</label><br>
@@ -98,17 +101,22 @@
 					    <div class="tab-pane fade" ng-class="{'active in': tab == 2}">
 							<div class="row m-t-m">
 								<div class="col-sm-8">
-									<table id="employee-vehicles" class="table table-striped table-bordered dataTable no-footer"></table>
+									<table ng-show="vehicles.length > 0" id="employee-vehicles" class="table table-striped table-bordered dataTable no-footer"></table>
+									<p class="center m-t-l" ng-if="vehicles.length < 1">No vehicles for this employee.</p>
 								</div>
 								<div class="col-sm-4 right-input">
 									<h4>Vehicle Inputs</h4>
-									<div class="col-sm-12">
+									<div class="col-sm-12 m-b-s">
 										<label for="guest-fullname">State:</label><br>
-										<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="vehicle.state" placeholder="State"/>
+										<select class="form-control" ng-model="vehicle.state">
+											<option value="0">Select State</option>
+											<option ng-repeat="state in states" value="{{state.id}}">{{state.name}}</option>
+										</select>
 									</div>
 									<div class="col-sm-12 m-b-s">
 										<label for="vehicle_type">Vehicle Type:</label><br>
 										<select class="form-control" ng-model="vehicle.type">
+											<option value="0">Select a Vehicle Type</option>
 											<option ng-repeat="vehicle_type in vehicle_types" value="{{vehicle_type.id}}">{{vehicle_type.name}}</option>
 										</select>
 									</div>
@@ -116,30 +124,36 @@
 										<label for="vehicle-license">Make:</label><br>
 										<input class="form-control" name="vehicle-license" ng-model="vehicle.make" placeholder="Honda"/><br>
 									</div>
-									<div class="col-sm-12">
+									<div class="col-sm-12 m-b-s">
 										<label for="vehicle-license">Model:</label><br>
-										<select class="form-control" ng-model="vehicle.modal">
+										<select class="form-control" ng-model="vehicle.vehicle_model_id" required>
+											<option value="0">Select a Vehicle Model</option>
 											<option ng-repeat="vehicle_model in vehicle_models" value="{{vehicle_model.id}}">{{vehicle_model.model}}</option>
 										</select>
 									</div>
-									<div class="col-sm-12">
+									<div class="col-sm-6">
 										<label for="vehicle-license">Color:</label><br>
-										<input class="form-control m-b-s" name="vehicle-license" ng-model="vehicle.color" placeholder="Black"/><br>
+										<input class="form-control input-sm" name="vehicle-license" ng-model="vehicle.color" placeholder="Black" required/><br>
 									</div>
 									<div class="col-sm-6">
 										<label for="vehicle-license">Year:</label><br>
-										<input class="form-control m-b-s inline" name="vehicle-license" ng-model="vehicle.year" placeholder="2008"/><br>
+										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="vehicle.year" placeholder="2008" required/><br>
 									</div>
 									<div class="col-sm-12">
 										<label for="vehicle-license">AVI Sticker Number:</label><br>
-										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="vehicle.avi_number" placeholder="123456"/><br>
+										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="vehicle.avi_sticker_number" placeholder="123456" required/><br>
 									</div>
 									<div class="col-sm-12">
-										<label for="vehicle-license">LPN:</label><br>
-										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="vehicle.lpn" placeholder="0001234"/><br>
+										<label for="vehicle-license">Parking Lot Sticker Number:</label><br>
+										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="vehicle.parking_lot_sticker_number" placeholder="123456" required/><br>
 									</div>
-									<div class="center">
-										<button class="btn btn-primary vehicle-btn" ng-click="vehicle_update()">Add Vehicle</button>
+									<div class="col-sm-12">
+										<label for="vehicle-license">License Plate Number:</label><br>
+										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="vehicle.license_plate_number" placeholder="0001234"/><br>
+									</div>
+									<div class="col-sm-12 center">
+										<button ng-hide="vehicleUpdate" class="btn btn-primary vehicle-btn" ng-click="addEmployeeVehicle()">Add Vehicle</button>
+										<button ng-show="vehicleUpdate" class="btn btn-primary vehicle-btn" ng-click="updateEmployeeVehicle()">Update Vehicle</button>
 									</div>
 								</div>
 							</div>

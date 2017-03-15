@@ -3,8 +3,16 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	console.log($rootScope.user);
 	var employee_id = $routeParams.id;
 	$scope.user = $rootScope.user.info;
-	$scope.vehicle = {};
 	$scope.employee = {};
+	
+	//Vehicle Defaults
+	$scope.vehicle = {};
+	$scope.vehicle.state = "0";
+	$scope.vehicle.vehicle_model_id = "0";
+	$scope.vehicle.type = "0";
+
+
+	$scope.vehicleUpdate = false; //Determines if vehicle update or vehidle add
 
 	$scope.tab = 1;
 
@@ -23,6 +31,8 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	});
 
 
+
+
 	function getEmployeeNotes(){
 		$http({
 		    method: 'GET',
@@ -38,11 +48,15 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		});
 	}
 
-	getEmployeeNotes();
 
 
 
-//Add Employee Note
+
+/*-----------------------------------------------------------------
+						POST AND PUT COMMANDS
+-----------------------------------------------------------------*/
+
+//Add employee note
 	$scope.addEmployeeNote = function(){
 		var employee_note_data = {
 			"body": "Overtime exempt under Ohio state law.",
@@ -63,6 +77,38 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	};
 
 
+//Add Employee Vehicle
+	$scope.addEmployeeVehicle = function(){
+		var vehicle_data = {
+			license_plate_number: $scope.vehicle.license_plate_number,
+			state_id: $scope.vehicle.state,
+			temporary_plate: "0",
+			year: $scope.vehicle.year,
+			vehicle_model_id: $scope.vehicle.vehicle_model_id,
+			color: $scope.vehicle.color,
+			avi_sticker_number: $scope.vehicle.avi_sticker_number,
+			parking_lot_sticker_number: $scope.vehicle.parking_lot_sticker_number,
+			vehicle_type_id: $scope.vehicle.type
+		};
+
+		console.log(vehicle_data);
+
+		$http({
+		    method: 'POST',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id + '/vehicles',
+		    data: vehicle_data,
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			//$scope.vehicles = data;
+			console.log('ADD VEHICLE RESPONSE', data);
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+
 
 //DROP DOWN POPULATORS
 	$scope.getPrimaryAssignment = function(){
@@ -73,6 +119,21 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		})
 		.success(function(data, status, headers, config) {
 			$scope.primary_assignments = data;
+
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+	$scope.getVehicleStates = function(){
+		$http({
+		    method: 'GET',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/states',
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			$scope.states = data;
 
 		})
 		.error(function(data, status, headers, config) {
@@ -155,7 +216,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		});
 	};
 	
-
+	$scope.getVehicleStates();
 	$scope.getPrimaryAssignment();
 	$scope.getVehicleTypes();
 	$scope.getVehicleModels();
@@ -173,20 +234,35 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	})
 	.success(function(vehicles, status, headers, config) {
 		console.log('VEHICLES', vehicles);
+		$scope.vehicles = vehicles;
+		if(vehicles.length < 1){
+			console.log('No Vehicles');
+		} else {
+			$scope.buildVehicleTable();
+		}
+	})
+	.error(function(data, status, headers, config) {
+		console.log(data);
+	});
+
+
+
+	$scope.buildVehicleTable = function(){
 		var columns = [
-		    {"sTitle":"License Plate", "mData":"lpn"},
-		    {"sTitle":"Type", "mData":"type"},
-		    {"sTitle":"Make", "mData":"make"},
-		    {"sTitle":"Model", "mData":"model"},
+		    {"sTitle":"License Plate", "mData":"license_plate_number"},
+		    {"sTitle":"Type", "sClass":"type"},
+		    // {"sTitle":"Make", "mData":"make"},
+		    {"sTitle":"Model", "sClass":"model"},
 		    {"sTitle":"Color", "mData":"color"},
 		    {"sTitle":"Year", "mData":"year"},
+		    {"sTitle":"AVI Number", "mData":"avi_sticker_number"},
 		    {"sTitle":"Edit", "sClass":"vehicle-edit"},
 		    {"sTitle":"Delete", "sClass":"vehicle-delete"}
 		];
 
 		//CreateTime, Begin Time, ExpiryTime, Suite ID, First Name, Last Name, Phone, Email, LPN, Make, Model, Color, PermitTag
 		$('#employee-vehicles').dataTable({
-	        "data": vehicles,
+	        "data": $scope.vehicles,
 	        "columns":columns,
             "columnDefs": [
             		{
@@ -228,82 +304,88 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 				console.log(data);
 			});
 		});
-	})
-	.error(function(data, status, headers, config) {
-		console.log(data);
-	});
+	};
 
 	
 	$scope.vehicle_update = function(){
 		$scope.vehicle = {};
 		$('.vehicle-btn').text('Add Vehicle');
 	};
+
 	// $('.vehicle-btn').click(function(){
 	// 	$scope.vehicle = {};
 	// 	$(this).text('Add Vehicle');
 	// });
-	$http({
-	    method: 'GET',
-	    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
-	    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/'+ employee_id +'/violations',
-	    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
-	})
-	.success(function(violations, status, headers, config) {
-		console.log('VIOLATIONS',violations);
-		var columns = [
-		    {"sTitle":"Violation Date", "mData":"violation_date"},
-		    {"sTitle":"Violation Number", "mData":"violation_number"},
-		    {"sTitle":"Violation Type", "mData":"violation_type_id"},
-		    {"sTitle":"Payment Status", "mData":"payment_status"},
-		    {"sTitle":"Amount", "mData":"violation_amount"},
-		    {"sTitle":"Actions", "sClass":"violation-details"}
-		];
-
-		//CreateTime, Begin Time, ExpiryTime, Suite ID, First Name, Last Name, Phone, Email, LPN, Make, Model, Color, PermitTag
-		$('#violations').dataTable({
-	        "data": violations,
-	        "columns":columns,
-            "columnDefs": [
-        		{
-	            	"targets": 5,
-					"data": function ( row, type, val, meta ) {
-	            		return '<button class="btn btn-sm btn-default violation-details" data-violation="'+row.id+'">View Details</button></a>';
-            		}
-            	}
-	        ]
-	    });
 
 
-	    $('#violations').on('click', '.violation-details', function(){
-			var violation_id = $(this).data('violation');
-			console.log(violation_id);
-			$http({
-			    method: 'GET',
-			    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
-			    url: appConfig.proxy+'://'+ appConfig.domain + '/violations/' + violation_id,
-			    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
-			})
-			.success(function(data, status, headers, config) {
-				console.log(data);
-				$scope.violation.lpn = data[0].lpn;
-				$scope.violation.date = data[0].date;
-				$scope.violation.time = data[0].time;
-				$scope.violation.employee_id = data[0].employee_id;
-				$scope.violation.type = data[0].type;
-				$scope.violation.description = data[0].description;
-				// $scope.violation.avi_number = data[0].avi_number;
-				// $scope.vehicle.color = data[0].color;
 
-				$('.add-violation').text('Update Violation');
-			})
-			.error(function(data, status, headers, config) {
-				console.log(data);
+
+	$scope.getEmployeeViolations = function(){
+		$http({
+		    method: 'GET',
+		    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/'+ employee_id +'/violations',
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(violations, status, headers, config) {
+			console.log('VIOLATIONS',violations);
+			var columns = [
+			    {"sTitle":"Violation Date", "mData":"violation_date"},
+			    {"sTitle":"Violation Number", "mData":"violation_number"},
+			    {"sTitle":"Violation Type", "mData":"violation_type_id"},
+			    {"sTitle":"Payment Status", "mData":"payment_status"},
+			    {"sTitle":"Amount", "mData":"violation_amount"},
+			    {"sTitle":"Actions", "sClass":"violation-details"}
+			];
+
+			//CreateTime, Begin Time, ExpiryTime, Suite ID, First Name, Last Name, Phone, Email, LPN, Make, Model, Color, PermitTag
+			$('#violations').dataTable({
+		        "data": violations,
+		        "columns":columns,
+	            "columnDefs": [
+	        		{
+		            	"targets": 5,
+						"data": function ( row, type, val, meta ) {
+		            		return '<button class="btn btn-sm btn-default violation-details" data-violation="'+row.id+'">View Details</button></a>';
+	            		}
+	            	}
+		        ]
+		    });
+
+
+		    $('#violations').on('click', '.violation-details', function(){
+				var violation_id = $(this).data('violation');
+				console.log(violation_id);
+				$http({
+				    method: 'GET',
+				    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
+				    url: appConfig.proxy+'://'+ appConfig.domain + '/violations/' + violation_id,
+				    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+				})
+				.success(function(data, status, headers, config) {
+					console.log(data);
+					$scope.violation.lpn = data[0].lpn;
+					$scope.violation.date = data[0].date;
+					$scope.violation.time = data[0].time;
+					$scope.violation.employee_id = data[0].employee_id;
+					$scope.violation.type = data[0].type;
+					$scope.violation.description = data[0].description;
+					// $scope.violation.avi_number = data[0].avi_number;
+					// $scope.vehicle.color = data[0].color;
+
+					$('.add-violation').text('Update Violation');
+				})
+				.error(function(data, status, headers, config) {
+					console.log(data);
+				});
 			});
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
 		});
-	})
-	.error(function(data, status, headers, config) {
-		console.log(data);
-	});
+	};
+
+
 
 	$scope.violation_update = function(){
 		$scope.violation = {};
