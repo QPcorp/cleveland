@@ -4,6 +4,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	var employee_id = $routeParams.id;
 	$scope.user = $rootScope.user.info;
 	$scope.vehicle = {};
+	$scope.employee = {};
 
 	$scope.tab = 1;
 
@@ -14,6 +15,8 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	})
 	.success(function(data, status, headers, config) {
 		$scope.employee = data;
+		console.log($scope.employee);
+		$scope.employee.primary_assignment = $scope.employee.primary_assignment || "0";
 		console.log($scope.employee);
 	})
 	.error(function(data, status, headers, config) {
@@ -38,6 +41,9 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 
 	getEmployeeNotes();
 
+
+
+//Add Employee Note
 	$scope.addEmployeeNote = function(){
 		var employee_note_data = {
 			"body": "Overtime exempt under Ohio state law.",
@@ -56,6 +62,61 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 			console.log(data);
 		});
 	};
+
+
+
+//DROP DOWN POPULATORS
+	$scope.getPrimaryAssignment = function(){
+		$http({
+		    method: 'GET',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/assignments',
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			$scope.primary_assignments = data;
+
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+	$scope.getVehicleTypes = function(){
+		$http({
+		    method: 'GET',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/vehicles/types',
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			$scope.vehicle_types = data;
+
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+	$scope.getVehicleModels = function(){
+		$http({
+		    method: 'GET',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/vehicles/models',
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			$scope.vehicle_models = data;
+
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+	
+
+	$scope.getPrimaryAssignment();
+	$scope.getVehicleTypes();
+	$scope.getVehicleModels();
+
+
 
 //Vehicles Tab
 	$http({

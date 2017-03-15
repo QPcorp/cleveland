@@ -931,4 +931,7 @@ table.dataTable thead > tr > th, table.dataTable tbody > tr > td {
   font-size: 12px;
   text-transform: uppercase; }
 
+textarea {
+  resize: none; }
+
 /*# sourceMappingURL=styles.css.map */
