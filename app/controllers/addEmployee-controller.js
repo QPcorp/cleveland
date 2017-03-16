@@ -31,7 +31,7 @@ app.controller('addEmployeeController', function($scope, $location, $http, appCo
 
 	      $http({
                 method: 'POST',
-                url: 'https://'+ appConfig.domain + '/employee',
+                url: 'https://dev-csr-clevelandclinic.locomobi.com/employees',
                 data: $scope.employee,
                 headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
             })

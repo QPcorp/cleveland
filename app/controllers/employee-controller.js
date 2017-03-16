@@ -1,39 +1,47 @@
-app.controller('employeeController', function($scope, $location, $routeParams, $http, appConfig, $rootScope, $cookieStore, locationService){
+app.controller('employeeController', function($scope, $location, $routeParams, $http, $rootScope, $cookieStore, locationService){
 
 	console.log($rootScope.user);
 	var employee_id = $routeParams.id;
 	$scope.user = $rootScope.user.info;
 	$scope.employee = {};
-	
+	// $scope.employee.termination_date = moment().format('MM-DD-YY');
+
 	//Vehicle Defaults
 	$scope.vehicle = {};
 	$scope.vehicle.state = "0";
 	$scope.vehicle.vehicle_model_id = "0";
 	$scope.vehicle.type = "0";
 
+	$scope.violation = {};
+	$scope.violation.employee_id = employee_id;
+	$scope.violation.type = "0";
+	$scope.violation.action = "0";
+	$scope.violation.amount = "0";
 
-	$scope.vehicleUpdate = false; //Determines if vehicle update or vehidle add
+
+	$scope.vehicleSelected = false; //Determines if vehicle update or vehidle add
+	$scope.violationSelected = false; 
 
 	$scope.tab = 1;
 
-	$http({
-	    method: 'GET',
-	    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id,
-	    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
-	})
-	.success(function(data, status, headers, config) {
-		$scope.employee = data;
-		$scope.employee.primary_assignment = $scope.employee.primary_assignment || "0";
-		console.log('EMPLOYEE', $scope.employee);
-	})
-	.error(function(data, status, headers, config) {
-		console.log(data);
-	});
+
+	$scope.getEmployeeData = function(){
+		$http({
+		    method: 'GET',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id,
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			$scope.employee = data;
+			console.log('EMPLOYEE', $scope.employee);
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
 
 
-
-
-	function getEmployeeNotes(){
+	$scope.getEmployeeNotes = function(){
 		$http({
 		    method: 'GET',
 		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id + '/notes',
@@ -46,7 +54,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		.error(function(data, status, headers, config) {
 			console.log(data);
 		});
-	}
+	};
 
 
 
@@ -109,9 +117,44 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	};
 
 
+//Update Employee
+	$scope.updateEmployee = function(){
+		var vehicle_data = {
+			license_plate_number: $scope.vehicle.license_plate_number,
+			state_id: $scope.vehicle.state,
+			temporary_plate: "0",
+			year: $scope.vehicle.year,
+			vehicle_model_id: $scope.vehicle.vehicle_model_id,
+			color: $scope.vehicle.color,
+			avi_sticker_number: $scope.vehicle.avi_sticker_number,
+			parking_lot_sticker_number: $scope.vehicle.parking_lot_sticker_number,
+			vehicle_type_id: $scope.vehicle.type
+		};
+
+		console.log(vehicle_data);
+
+		$http({
+		    method: 'PUT',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id,
+		    data: $scope.employee,
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			console.log('update employee',data);
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+
+
+
+
+
 
 //DROP DOWN POPULATORS
-	$scope.getPrimaryAssignment = function(){
+	$scope.getPrimaryAssignments = function(){
 		$http({
 		    method: 'GET',
 		    url: 'https://dev-csr-clevelandclinic.locomobi.com/assignments',
@@ -119,6 +162,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		})
 		.success(function(data, status, headers, config) {
 			$scope.primary_assignments = data;
+			console.log($scope.employee.primary_assignment);
 
 		})
 		.error(function(data, status, headers, config) {
@@ -159,7 +203,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	$scope.getVehicleModels = function(){
 		$http({
 		    method: 'GET',
-		    url: 'https://dev-csr-clevelandclinic.locomobi.com/vehicles/models',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/vehicles/makes',
 		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 		})
 		.success(function(data, status, headers, config) {
@@ -216,14 +260,6 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		});
 	};
 	
-	$scope.getVehicleStates();
-	$scope.getPrimaryAssignment();
-	$scope.getVehicleTypes();
-	$scope.getVehicleModels();
-	$scope.getViolationTypes();
-	$scope.getViolationActions();
-	$scope.getViolationAmounts();
-
 
 
 //Vehicles Tab
@@ -246,7 +282,6 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	});
 
 
-
 	$scope.buildVehicleTable = function(){
 		var columns = [
 		    {"sTitle":"License Plate", "mData":"license_plate_number"},
@@ -265,6 +300,16 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	        "data": $scope.vehicles,
 	        "columns":columns,
             "columnDefs": [
+            		{
+		            	"targets": 1,
+						"data": function ( row, type, val, meta ) {
+							for(var i = 0; i < $scope.vehicle_types.length; i ++){
+
+							}
+							console.log(row);
+		            		return '';
+	            		}
+	            	},
             		{
 		            	"targets": 6,
 						"data": function ( row, type, val, meta ) {
@@ -316,8 +361,6 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	// 	$scope.vehicle = {};
 	// 	$(this).text('Add Vehicle');
 	// });
-
-
 
 
 	$scope.getEmployeeViolations = function(){
@@ -391,6 +434,21 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		$scope.violation = {};
 		$('.add-violation').text('Add Violation');
 	};
+
+
+
+	$scope.getVehicleStates();
+	$scope.getPrimaryAssignments();
+	$scope.getVehicleTypes();
+	$scope.getVehicleModels();
+	$scope.getViolationTypes();
+	$scope.getViolationActions();
+	$scope.getViolationAmounts();
+
+	//Employee GETS
+	$scope.getEmployeeData();
+	$scope.getEmployeeNotes();
+	$scope.getEmployeeViolations();
 
 
 });

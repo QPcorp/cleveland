@@ -1,4 +1,4 @@
-app.controller('activateController', function($scope, $location, $routeParams, $http, $rootScope, appConfig, $cookieStore){
+app.controller('activateController', function($scope, $location, $routeParams, $http, $rootScope, $cookieStore){
 	
 	// $scope.login = {};
 	// $rootScope.user = {};
@@ -39,7 +39,7 @@ app.controller('activateController', function($scope, $location, $routeParams, $
 			$scope.activate.login_error = true;
 		} else {
 			//Put endpoint for profile
-			var url = 'https://'+ appConfig.domain + '/user/password';
+			var url = 'https://dev-csr-clevelandclinic.locomobi.com/user/password';
 			$http.put(url, $scope.activate, config)
 	            .success(function (data, status, headers, config) {
 	            	console.log(data);
