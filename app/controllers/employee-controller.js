@@ -92,17 +92,23 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 
 //Add employee note
 	$scope.addEmployeeNote = function(){
-		var employee_note_data = {
-			"body": "Overtime exempt under Ohio state law.",
+		
+		var employee_note_data = { 
+			"employee_note" : { 
+				"body" : $scope.employee_note
+			}
 		};
+		//console.log(employee_note_data);
 
 		$http({
 		    method: 'POST',
+		    data: employee_note_data,
 		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id + '/notes',
 		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 		})
 		.success(function(data, status, headers, config) {
-			$scope.notes = data;
+			// $scope.notes = data;
+			$scope.getEmployeeNotes();
 			console.log('NOTES', data);
 		})
 		.error(function(data, status, headers, config) {
@@ -340,7 +346,6 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	};
 	
 
-
 //Vehicles Tab
 	$scope.getEmployeeVehicles = function(){
 		$http({
@@ -429,6 +434,23 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 				$scope.vehicle.color = data[0].color;
 
 				$('.vehicle-btn').text('Update Vehicle');
+			})
+			.error(function(data, status, headers, config) {
+				console.log(data);
+			});
+		});
+
+		$('.delete-vehicle').click(function(){
+			var vehicle_id = $(this).data('vehicle');
+			$http({
+			    method: 'DELETE',
+			    url: 'https://dev.csr-api.locomobi.com:2950/employees/45/vehicles/'+vehicle_id,//vehicle_id,
+			    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+			})
+			.success(function(data, status, headers, config) {
+				console.log(data);
+				$scope.buildVehicleTable();
+
 			})
 			.error(function(data, status, headers, config) {
 				console.log(data);
