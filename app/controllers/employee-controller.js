@@ -530,6 +530,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	$scope.getEmployeeVehicles();
 	$scope.getJobTypes();
 	$scope.getShifts();
+	$scope.formOfPayments();
 
 	//Employee GETS
 	$scope.getEmployeeData();
