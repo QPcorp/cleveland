@@ -8,7 +8,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 
 	//Vehicle Defaults
 	$scope.vehicle = {};
-	$scope.vehicle.state = "0";
+	$scope.vehicle.state_id = "0";
 	$scope.vehicle.vehicle_make_id = "0";
 	$scope.vehicle.vehicle_type_id = "0";
 
@@ -35,17 +35,24 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		})
 		.success(function(data, status, headers, config) {
 			$scope.employee = data;
-			$scope.employee.primary_assignment_id = data.primary_assignment_id.toString();
-			
+			if(data.primary_assignment_id){
+				$scope.employee.primary_assignment_id = data.primary_assignment_id.toString();
+			} else {
+				$scope.employee.primary_assignment_id = "0";
+			}
 			//Secondary Assignment
 			if(data.secondary_assignment_id){
 				$scope.employee.secondary_assignment_id = data.secondary_assignment_id.toString();
+			} else {
+				$scope.employee.secondary_assignment_id = "0";
 			}
 
 			//Job Type
 			if(data.job_type_id){
 				$scope.employee.job_type_id = data.job_type_id.toString();
 				console.log($scope.employee.job_type_id);
+			} else {
+				$scope.employee.job_type_id = "0";
 			}
 
 			//Shift
@@ -119,6 +126,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 
 //Add Employee Vehicle
 	$scope.addEmployeeVehicle = function(){
+
 		var vehicle_data = { 
 			vehicle : { 
 				license_plate_number       : $scope.vehicle.license_plate_number,
@@ -144,12 +152,49 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 		})
 		.success(function(data, status, headers, config) {
-			//$scope.vehicles = data;
 			console.log('ADD VEHICLE RESPONSE', data);
-			//var table = $('#employee-vehicles').dataTable();
-			//$('#employee-vehicles').destroy();
-			$('#employee-vehicles').dataTable().fnDestroy();
-			$scope.buildVehicleTable();
+			$scope.vehicle = {};
+			$scope.vehicleForm.$setPristine();
+			$scope.getEmployeeVehicles();
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+	$scope.updateEmployeeVehicle = function(vehicle_id){
+		console.log($scope.vehicle_id);
+		var vehicle_data = { 
+			vehicle : { 
+				license_plate_number       : $scope.vehicle.license_plate_number,
+                state_id                   : $scope.vehicle.state_id,
+                temporary_plate            : "0",
+                year                       : $scope.vehicle.year,
+                model                      : $scope.vehicle.vehicle_model_id,
+                color                      : $scope.vehicle.color,
+                avi_sticker_number         : $scope.vehicle.avi_sticker_number,
+                leed_qualified             : "0",
+                parking_lot_sticker_number : $scope.vehicle.parking_lot_sticker_number,
+                vehicle_type_id            : $scope.vehicle.vehicle_type_id,
+                vehicle_make_id            : $scope.vehicle.vehicle_make_id
+            } 
+        };
+
+		console.log(vehicle_data);
+
+		$http({
+		    method: 'PUT',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id + '/vehicles/'+$scope.vehicle_id,
+		    data: vehicle_data,
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			console.log('UPDATE VEHICLE RESPONSE', data);
+			//$scope.vehicle = {};
+			$scope.vehicleSelected = false;
+			$scope.vehicle = {};
+			$scope.vehicleForm.$setPristine();
+			$scope.getEmployeeVehicles();
 		})
 		.error(function(data, status, headers, config) {
 			console.log(data);
@@ -186,8 +231,6 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 			console.log(data);
 		});
 	};
-
-
 
 
 
@@ -373,7 +416,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		var columns = [
 		    {"sTitle":"License Plate", "mData":"license_plate_number"},
 		    {"sTitle":"Type", "sClass":"type"},
-		    // {"sTitle":"Make", "mData":"make"},
+		    {"sTitle":"Make", "sClass":"make"},
 		    {"sTitle":"Model", "mData":"model"},
 		    {"sTitle":"Color", "mData":"color"},
 		    {"sTitle":"Year", "mData":"year"},
@@ -385,6 +428,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 
 		//CreateTime, Begin Time, ExpiryTime, Suite ID, First Name, Last Name, Phone, Email, LPN, Make, Model, Color, PermitTag
 		$('#employee-vehicles').dataTable({
+			"destroy": true,
 	        "data": $scope.vehicles,
 	        "columns":columns,
             "columnDefs": [
@@ -400,14 +444,26 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		            		//return '';
 	            		}
 	            	},
+	            	{
+		            	"targets": 2,
+						"data": function ( row, type, val, meta ) {
+							for(var i = 0; i < $scope.vehicle_makes.length; i ++){
+								if(row.vehicle_make_id == $scope.vehicle_makes[i].id){
+									var x = $scope.vehicle_makes[i].name;
+									return x;
+								}
+							}
+		            		//return '';
+	            		}
+	            	},
             		{
-		            	"targets": 7,
+		            	"targets": 8,
 						"data": function ( row, type, val, meta ) {
 		            		return '<button class="btn btn-sm btn-default edit-vehicle" data-vehicle="'+row.id+'">Edit Vehicle</button></a>';
 	            		}
 	            	},
 	            	{
-		            	"targets": 8,
+		            	"targets": 9,
 						"data": function ( row, type, val, meta ) {
 		            		return '<button class="btn btn-sm btn-danger delete-vehicle" data-vehicle="'+row.id+'">Delete Vehicle</button></a>';
 	            		}
@@ -416,24 +472,28 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	    });
 
 	    $('.edit-vehicle').click(function(){
+	    	console.log('ahahah');
 			var vehicle_id = $(this).data('vehicle');
+			$scope.vehicle_id = vehicle_id;
 			$http({
 			    method: 'GET',
-			    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/',//vehicle_id,
+			    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/'+employee_id+ '/vehicles/' + vehicle_id,
 			    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 			})
 			.success(function(data, status, headers, config) {
 				console.log(data);
-				$scope.vehicle.lpn = data[0].lpn;
-				$scope.vehicle.state = data[0].state;
-				$scope.vehicle.make = data[0].make;
-				$scope.vehicle.model = data[0].model;
-				$scope.vehicle.type = data[0].type;
-				$scope.vehicle.year = data[0].year;
-				$scope.vehicle.avi_number = data[0].avi_number;
-				$scope.vehicle.color = data[0].color;
+				$scope.vehicle.license_plate_number = data.license_plate_number;
+				$scope.vehicle.state_id = data.state_id.toString();
+				$scope.vehicle.vehicle_make_id = data.vehicle_make_id.toString();
+				$scope.vehicle.model = data.model;
+				$scope.vehicle.vehicle_type_id = data.vehicle_type_id.toString();
+				$scope.vehicle.year = data.year;
+				$scope.vehicle.avi_number = data.avi_number;
+				$scope.vehicle.parking_lot_sticker_number = data.parking_lot_sticker_number;
+				$scope.vehicle.color = data.color;
+				$scope.vehicleSelected = true;
 
-				$('.vehicle-btn').text('Update Vehicle');
+				//$('.vehicle-btn').text('Update Vehicle');
 			})
 			.error(function(data, status, headers, config) {
 				console.log(data);
@@ -444,13 +504,11 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 			var vehicle_id = $(this).data('vehicle');
 			$http({
 			    method: 'DELETE',
-			    url: 'https://dev.csr-api.locomobi.com:2950/employees/45/vehicles/'+vehicle_id,//vehicle_id,
+			    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/'+ employee_id +'/vehicles/'+vehicle_id,//vehicle_id,
 			    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 			})
 			.success(function(data, status, headers, config) {
-				console.log(data);
-				$scope.buildVehicleTable();
-
+				$scope.getEmployeeVehicles();
 			})
 			.error(function(data, status, headers, config) {
 				console.log(data);
@@ -458,22 +516,12 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		});
 	};
 
-	
-	$scope.vehicle_update = function(){
-		$scope.vehicle = {};
-		$('.vehicle-btn').text('Add Vehicle');
-	};
-
-	// $('.vehicle-btn').click(function(){
-	// 	$scope.vehicle = {};
-	// 	$(this).text('Add Vehicle');
-	// });
-
 
 	$scope.getEmployeeViolations = function(){
 		$http({
 		    method: 'GET',
 		    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
+		    //https://dev-csr-clevelandclinic.locomobi.com/employees/45/violations
 		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/'+ employee_id +'/violations',
 		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
 		})

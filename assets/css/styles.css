@@ -934,4 +934,7 @@ table.dataTable thead > tr > th, table.dataTable tbody > tr > td {
 textarea {
   resize: none; }
 
+.no-padding {
+  padding: 0 !important; }
+
 /*# sourceMappingURL=styles.css.map */
