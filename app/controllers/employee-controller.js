@@ -170,7 +170,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
                 state_id                   : $scope.vehicle.state_id,
                 temporary_plate            : "0",
                 year                       : $scope.vehicle.year,
-                model                      : $scope.vehicle.vehicle_model_id,
+                model                      : $scope.vehicle.model,
                 color                      : $scope.vehicle.color,
                 avi_sticker_number         : $scope.vehicle.avi_sticker_number,
                 leed_qualified             : "0",
@@ -195,6 +195,38 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 			$scope.vehicle = {};
 			$scope.vehicleForm.$setPristine();
 			$scope.getEmployeeVehicles();
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+	$scope.addEmployeeViolation = function(){
+
+		var violation_data = { 
+			violation : { 
+				license_plate_number       : $scope.violation.license_plate_number,
+                violation_type_id          : $scope.violation.violation_type_id,
+                violation_action_id        : $scope.violation.violation_action_id,
+                violation_amount           : $scope.violation.violation_amount,
+                payment_status			   : 'uppaid',
+
+            } 
+        };
+
+		console.log(violation_data);
+
+		$http({
+		    method: 'POST',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id + '/violations',
+		    data: violation_data,
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			console.log('ADD VIOLATION RESPONSE', data);
+			$scope.violation = {};
+			$scope.violationForm.$setPristine();
+			$scope.getEmployeeViolations();
 		})
 		.error(function(data, status, headers, config) {
 			console.log(data);
@@ -488,7 +520,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 				$scope.vehicle.model = data.model;
 				$scope.vehicle.vehicle_type_id = data.vehicle_type_id.toString();
 				$scope.vehicle.year = data.year;
-				$scope.vehicle.avi_number = data.avi_number;
+				$scope.vehicle.avi_sticker_number = data.avi_sticker_number;
 				$scope.vehicle.parking_lot_sticker_number = data.parking_lot_sticker_number;
 				$scope.vehicle.color = data.color;
 				$scope.vehicleSelected = true;
@@ -518,6 +550,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 
 
 	$scope.getEmployeeViolations = function(){
+		$('#violations').empty();
 		$http({
 		    method: 'GET',
 		    //url: 'https://'+ appConfig.domain + '/permit_property/' + location_id,
@@ -538,6 +571,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 
 			//CreateTime, Begin Time, ExpiryTime, Suite ID, First Name, Last Name, Phone, Email, LPN, Make, Model, Color, PermitTag
 			$('#violations').dataTable({
+				"destroy": true,
 		        "data": violations,
 		        "columns":columns,
 	            "columnDefs": [

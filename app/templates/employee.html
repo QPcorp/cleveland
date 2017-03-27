@@ -384,7 +384,7 @@
 							<div class="col-sm-8">
 								<table id="violations" class="table table-striped table-bordered dataTable no-footer"></table>
 							</div>
-							<div class="col-sm-4 right-input">
+							<div class="col-sm-4 right-input" ng-form name="violationForm">
 								<h4>Violation Details</h4>
 								<div class="col-sm-12 m-b-s">
 									<label for="guest-fullname">Employee Id:</label><br>
@@ -421,7 +421,7 @@
 									    <input class="form-control" placeholder="Select a date" ng-model="violation.date" ng-model-options="{ updateOn: 'blur' }" />
 									</div>
 								</div>
-								<div class="col-sm-12 m-b-s">
+								<!-- <div class="col-sm-12 m-b-s">
 									<label for="vehicle-license">Time:</label><br>
 									<div class="input-group" moment-picker="violation.timepicker" disabled="false" format="HH:mm">
 									    <span class="input-group-addon">
@@ -429,18 +429,18 @@
 									    </span>
 									    <input class="form-control" placeholder="Select a time" ng-model="violation.timepicker" ng-model-options="{ updateOn: 'blur' }" />
 									</div>
-								</div>
+								</div> -->
 								<div class="col-sm-12 m-b-s">
 									<label for="vehicle-license">License Plate:</label><br>
 									<input class="form-control m-b-s inline" name="vehicle-license" ng-model="violation.lpn" placeholder="123ABC"/><br>
 								</div>
-								<div class="col-sm-12 m-b-s">
+								<!-- <div class="col-sm-12 m-b-s">
 									<label for="vehicle-license">Description:</label><br>
 									<textarea ng-model="violation.description" class="form-control" style="width:100%;height:100px;"></textarea>
-								</div>
+								</div> -->
 								<div class="center m-t-m">
-									<button ng-hide="violationSelected" class="btn btn-primary add-violation" ng-click="addViolation()">Add Violation</button>
-									<button ng-show="violationSelected" class="btn btn-primary add-violation" ng-click="updateViolation()">Update Violation</button>
+									<button ng-hide="violationSelected" class="btn btn-primary add-violation" ng-disabled="violationForm.$invalid || violationForm.$pristine" ng-click="addViolation()">Add Violation</button>
+									<button ng-show="violationSelected" class="btn btn-primary add-violation" ng-disabled="violationForm.$invalid || violationForm.$pristine" ng-click="updateViolation()">Update Violation</button>
 								</div>
 							</div>
 							</div>
