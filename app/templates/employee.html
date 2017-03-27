@@ -391,30 +391,34 @@
 									<input class="form-control input-md m-b-s inline" name="guest-fullname" ng-model="violation.employee_id" disabled="" />
 								</div>
 								<div class="col-sm-12 m-b-s">
-									<label for="violation_types"">Type:</label><br>
-									<select class="form-control" ng-model="violation.type" >
+									<label for="violation_number">Violation Number:</label><span class="red">*</span><br>
+									<input class="form-control input-md m-b-s inline" name="violation_number" ng-model="violation.number" required />
+								</div>
+								<div class="col-sm-12 m-b-s">
+									<label for="violation_types"">Type:</label><span class="red">*</span><br>
+									<select class="form-control" ng-model="violation.type_id" required>
 										<option value="0" > Select Violation Type</option>
 										<option ng-repeat="violation_type in violation_types" value="{{violation_type.id}}">{{violation_type.name}}</option>
 									</select>
 								</div>
 								<div class="col-sm-12 m-b-s">
-									<label for="violation_types"">Action</label><br>
-									<select class="form-control" ng-model="violation.action" >
+									<label for="violation_types"">Action</label><span class="red">*</span><br>
+									<select class="form-control" ng-model="violation.action_id" required>
 										<option value="0" > Select Violation Action</option>
 										<option ng-repeat="violation_action in violation_actions" value="{{violation_action.id}}">{{violation_action.name}}</option>
 									</select>
 								</div>
 								<div class="col-sm-12 m-b-s">
-									<label for="violation_types"">Amount</label><br>
-									<select class="form-control" ng-model="violation.amount" >
+									<label for="violation_types"">Amount</label><span class="red">*</span><br>
+									<select class="form-control" ng-model="violation.amount"  required>
 										<option value="0" > Select Violation Amount</option>
-										<option ng-repeat="violation_amount in violation_amounts" value="{{violation_amount.id}}">{{violation_amount.amount}}</option>
+										<option ng-repeat="violation_amount in violation_amounts" value="{{violation_amount.amount}}">{{violation_amount.amount}}</option>
 									</select>
 								</div>
 								<div class="col-sm-12 m-b-s">
-									<label for="vehicle-license">Date:</label><br>
+									<label for="vehicle-license">Date:</label><span class="red">*</span><br>
 									<!-- <input class="form-control m-b-s inline" name="vehicle-license" ng-model="violation.date" placeholder="01/13/17"/><br> -->
-									<div class="input-group" moment-picker="violation.date" min-view="month" max-view="month" format="MM-DD-YY"> 
+									<div class="input-group" moment-picker="violation.date" min-view="month" max-view="month" format="YYYY-MM-DD"> 
 									    <span class="input-group-addon">
 									        <i class="fa fa-calendar"></i>
 									    </span>
@@ -430,17 +434,17 @@
 									    <input class="form-control" placeholder="Select a time" ng-model="violation.timepicker" ng-model-options="{ updateOn: 'blur' }" />
 									</div>
 								</div> -->
-								<div class="col-sm-12 m-b-s">
-									<label for="vehicle-license">License Plate:</label><br>
-									<input class="form-control m-b-s inline" name="vehicle-license" ng-model="violation.lpn" placeholder="123ABC"/><br>
-								</div>
+								<!-- <div class="col-sm-12 m-b-s">
+									<label for="vehicle-license">License Plate:</label><span class="red">*</span><br>
+									<input class="form-control m-b-s inline" name="vehicle-license" ng-model="violation.license_plate_number" placeholder="123ABC"/><br>
+								</div> -->
 								<!-- <div class="col-sm-12 m-b-s">
 									<label for="vehicle-license">Description:</label><br>
 									<textarea ng-model="violation.description" class="form-control" style="width:100%;height:100px;"></textarea>
 								</div> -->
 								<div class="center m-t-m">
-									<button ng-hide="violationSelected" class="btn btn-primary add-violation" ng-disabled="violationForm.$invalid || violationForm.$pristine" ng-click="addViolation()">Add Violation</button>
-									<button ng-show="violationSelected" class="btn btn-primary add-violation" ng-disabled="violationForm.$invalid || violationForm.$pristine" ng-click="updateViolation()">Update Violation</button>
+									<button ng-hide="violationSelected" class="btn btn-primary add-violation" ng-disabled="violationForm.$invalid || violationForm.$pristine" ng-click="addEmployeeViolation()">Add Violation</button>
+									<button ng-show="violationSelected" class="btn btn-primary add-violation" ng-disabled="violationForm.$invalid || violationForm.$pristine" ng-click="updateEmployeeViolation()">Update Violation</button>
 								</div>
 							</div>
 							</div>

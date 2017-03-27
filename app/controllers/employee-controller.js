@@ -14,8 +14,8 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 
 	$scope.violation = {};
 	$scope.violation.employee_id = employee_id;
-	$scope.violation.type = "0";
-	$scope.violation.action = "0";
+	$scope.violation.type_id = "0";
+	$scope.violation.action_id = "0";
 	$scope.violation.amount = "0";
 
 	$scope.employee.job_type = "0";
@@ -202,13 +202,14 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	};
 
 	$scope.addEmployeeViolation = function(){
-
+		console.log('WHATS');
 		var violation_data = { 
 			violation : { 
-				license_plate_number       : $scope.violation.license_plate_number,
-                violation_type_id          : $scope.violation.violation_type_id,
-                violation_action_id        : $scope.violation.violation_action_id,
-                violation_amount           : $scope.violation.violation_amount,
+				violation_number 		   : $scope.violation.number,
+				violation_date 			   : $scope.violation.date,
+                violation_type_id          : Number($scope.violation.type_id),
+                violation_action_id        : Number($scope.violation.action_id),
+                violation_amount           : $scope.violation.amount,
                 payment_status			   : 'uppaid',
 
             } 
@@ -563,10 +564,11 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 			var columns = [
 			    {"sTitle":"Violation Date", "mData":"violation_date"},
 			    {"sTitle":"Violation Number", "mData":"violation_number"},
-			    {"sTitle":"Violation Type", "mData":"violation_type_id"},
+			    {"sTitle":"Violation Type", "mClass":"violation_type_id"},
+			    {"sTitle":"Violation Action", "mClass":"violation_action_id"},
 			    {"sTitle":"Payment Status", "mData":"payment_status"},
-			    {"sTitle":"Amount", "mData":"violation_amount"},
-			    {"sTitle":"Actions", "sClass":"violation-details"}
+			    {"sTitle":"Amount", "mData":"violation_amount"}
+			    //{"sTitle":"Actions", "sClass":"violation-details"}
 			];
 
 			//CreateTime, Begin Time, ExpiryTime, Suite ID, First Name, Last Name, Phone, Email, LPN, Make, Model, Color, PermitTag
@@ -575,12 +577,34 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 		        "data": violations,
 		        "columns":columns,
 	            "columnDefs": [
-	        		{
-		            	"targets": 5,
+	            	{
+		            	"targets": 2,
 						"data": function ( row, type, val, meta ) {
-		            		return '<button class="btn btn-sm btn-default violation-details" data-violation="'+row.id+'">View Details</button></a>';
+							for(var i = 0; i < $scope.violation_types.length; i ++){
+								if(row.violation_type_id == $scope.violation_types[i].id){
+									var x = $scope.violation_types[i].name;
+									return x;
+								}
+							}
+	            		}
+	            	},
+	            	{
+		            	"targets": 3,
+						"data": function ( row, type, val, meta ) {
+							for(var i = 0; i < $scope.violation_actions.length; i ++){
+								if(row.violation_action_id == $scope.violation_actions[i].id){
+									var x = $scope.violation_actions[i].name;
+									return x;
+								}
+							}
 	            		}
 	            	}
+	     //    		{
+		    //         	"targets": 6,
+						// "data": function ( row, type, val, meta ) {
+		    //         		return '<button class="btn btn-sm btn-default violation-details" data-violation="'+row.id+'">View Details</button></a>';
+	     //        		}
+	     //        	}
 		        ]
 		    });
 
