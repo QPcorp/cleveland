@@ -34,6 +34,10 @@ app.config(function($routeProvider) {
             templateUrl : 'app/templates/add-employee.html'
         })
 
+        .when('/reports', {
+            templateUrl : 'app/templates/reports.html',
+        })
+
         .when('/user-profile', {
             templateUrl : 'app/templates/user-profile.html',
             controller  : 'userProfileController'

@@ -11,6 +11,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 	$scope.vehicle.state_id = "0";
 	$scope.vehicle.vehicle_make_id = "0";
 	$scope.vehicle.vehicle_type_id = "0";
+	$scope.vehicle.leed_qualification = "0";
 
 	$scope.violation = {};
 	$scope.violation.employee_id = employee_id;
@@ -64,7 +65,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 
 			//Form of Payments
 			if(data.form_of_payment_id){
-				$scope.employee.form_of_payment_id = data.form_of_payment_id;
+				$scope.employee.form_of_payment_id = data.form_of_payment_id.toString();
 			} else {
 				$scope.employee.form_of_payment_id = "0";
 			}

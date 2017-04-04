@@ -152,7 +152,14 @@
 											<option value="0">Select a Vehicle Model</option>
 											<option ng-repeat="vehicle_model in vehicle_models" value="{{vehicle_model.id}}">{{vehicle_model.model}}</option>
 										</select> -->
-										<input class="form-control" name="vehicle-license" ng-model="vehicle.model" placeholder="Civic"/><br>
+										<input class="form-control" name="vehicle-license" ng-model="vehicle.model" placeholder="Civic"/>
+									</div>
+									<div class="col-sm-12 m-b-s">
+										<label for="vehicle-license">LEED Qualification:</label><span class="red">*</span><br>
+										<select class="form-control" ng-model="vehicle.leed_qualification">
+											<option value="0">Select LEED Qualification</option>
+											<option ng-repeat="vehicle_leed in vehicle_leeds" value="{{vehicle_leed.id}}">{{vehicle_leed.name}}</option>
+										</select>
 									</div>
 									<div class="col-sm-6">
 										<label for="vehicle-license">Color:</label><span class="red">*</span><br>
