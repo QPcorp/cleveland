@@ -211,8 +211,7 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
                 violation_type_id          : Number($scope.violation.type_id),
                 violation_action_id        : Number($scope.violation.action_id),
                 violation_amount           : $scope.violation.amount,
-                payment_status			   : 'uppaid',
-
+                payment_status			   : $scope.violation.payment_status
             } 
         };
 
@@ -229,6 +228,52 @@ app.controller('employeeController', function($scope, $location, $routeParams, $
 			$scope.violation = {};
 			$scope.violationForm.$setPristine();
 			$scope.getEmployeeViolations();
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+	$scope.updateEmployeeViolation = function(violation_id){
+		var violation_data = { 
+			violation : { 
+				violation_number 		   : $scope.violation.number,
+				violation_date 			   : $scope.violation.date,
+                violation_type_id          : Number($scope.violation.type_id),
+                violation_action_id        : Number($scope.violation.action_id),
+                violation_amount           : $scope.violation.amount,
+                payment_status			   : $scope.violation.payment_status
+            } 
+        };
+
+		console.log(violation_data);
+
+		$http({
+		    method: 'PUT',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id + '/violations/'+violation_id,
+		    data: violation_data,
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			console.log('Violation Updated', data);
+			$scope.violation = {};
+			$scope.violationForm.$setPristine();
+			$scope.getEmployeeViolations();
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data);
+		});
+	};
+
+	$scope.removeEmployeeViolation = function(violation_id){
+
+		$http({
+		    method: 'DELETE',
+		    url: 'https://dev-csr-clevelandclinic.locomobi.com/employees/' + employee_id + '/violations/'+violation_id,
+		    headers: {'Content-Type': 'application/json', "Authorization": "Basic " + $rootScope.user.basicAuth}
+		})
+		.success(function(data, status, headers, config) {
+			console.log('Violation Removed', data);
 		})
 		.error(function(data, status, headers, config) {
 			console.log(data);

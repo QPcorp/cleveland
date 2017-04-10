@@ -90,6 +90,7 @@
 											<option value="0">Select Primary Assignment</option>
 											<option ng-repeat="primary_assignment in primary_assignments" value="{{primary_assignment.id}}">{{primary_assignment.name}}</option>
 										</select>
+										<span class="red" ng-if="employee.primary_assignment_id == employee.secondary_assignment_id">Primary and Secondary Assignments cannot be the same.</span>
 									</div>
 									<div class="col-sm-3">
 										<label for="vehicle-license">Temporary Start Date:</label><br>
@@ -101,16 +102,15 @@
 										    <input class="form-control" placeholder="Select a date" ng-model="employee.temporary_start_date" ng-model-options="{ updateOn: 'blur' }" />
 										</div>
 									</div>
-									<div class="col-sm-3">
+									<!-- <div class="col-sm-3">
 										<label for="vehicle-license">Temporary Expire:</label><br>
-										<!-- <input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.temporary_expiration_date" placeholder="32"/><br> -->
 										<div class="input-group input-md" moment-picker="employee.temporary_expiration_date" min-view="month" max-view="month" format="MM-DD-YY"> 
 										    <span class="input-group-addon">
 										        <i class="fa fa-calendar"></i>
 										    </span>
 										    <input class="form-control" placeholder="Select a date" ng-model="employee.temporary_expiration_date" ng-model-options="{ updateOn: 'blur' }" />
 										</div>
-									</div>
+									</div> -->
 									<div class="col-sm-12">
 										<button class="btn btn-primary" ng-disabled="parking_employee_form.$pristine || parking_employee_form.$invalid" ng-click="updateEmployee()">Update</button>
 									</div>
