@@ -193,15 +193,15 @@
 						      	<div class="row m-t-m">
 									<div class="col-sm-3">
 										<label for="org_id">HRMS Org Id:</label><br>
-										<span class="m-b-s">{{employee.org_id}}</span><br>
+										<span class="m-b-s inline" name="org_id" ng-model="employee.org_id">{{}}</span><br>
 									</div>
 									<div class="col-sm-3">
 										<label for="vehicle-license" >Division Institute:</label><br>
-										<span class="m-b-s inline">{{employee.division_institute}}</span><br>
+										<input class="form-control m-b-s inline" name="vehicle-license" ng-model="employee.division_institute" placeholder="ABC123"/><br>
 									</div>
 									<div class="col-sm-3">
 										<label for="vehicle-license">Department:</label><br>
-										<span class="m-b-s inline">{{employee.department_name}}</span><br>
+										<input class="form-control m-b-s inline" name="vehicle-license" ng-model="employee.department_name" placeholder="Engineering"/><br>
 									</div>
 									<div class="col-sm-3">
 										<label for="job_code">Job Code:</label><br>
@@ -210,15 +210,15 @@
 									<div class="col-sm-12 no-padding m-t-s">
 										<div class="col-sm-3">
 											<label for="job_title">Job Title:</label><br>
-											<span class="m-b-s inline">{{employee.job_title}}</span><br>
+											<input class="form-control input-md m-b-s inline" name="job_title" ng-model="employee.job_title" placeholder="Software Engineer"/>
 										</div>
 										<div class="col-sm-3">
 											<label for="mail_code">Mail Code:</label><br>
-											<span class="m-b-s inline">{{employee.ccf_mail_code}}</span>
+											<input class="form-control input-md m-b-s inline" name="mail_code" ng-model="employee.ccf_mail_code" placeholder="09123"/>
 										</div>
 										<div class="col-sm-3">
 											<label for="email_address">Email:</label><br>
-											<span class="m-b-s inline">{{employee.email_address}}</span>
+											<input class="form-control input-md m-b-s inline" name="email_address" ng-model="employee.email_address" placeholder="example@gmail.com"/>
 										</div>
 										<div class="col-sm-3">
 										</div>
@@ -226,19 +226,19 @@
 									<div class="col-sm-12 no-padding m-t-s">
 										<div class="col-sm-3">
 											<label for="supervisor_first_name">Supervisor First Name:</label><br>
-											<span class="m-b-s inline">{{supervisor_first_name}}</span>
+											<input class="form-control input-md m-b-s inline" name="supervisor_first_name" ng-model="employee.supervisor_first_name" placeholder="Jane"/>
 										</div>
 										<div class="col-sm-3">
 											<label for="supervisor_last_name">Supervisor Last Name:</label><br>
-											<span class="m-b-s inline">{{supervisor_last_name}}</span>
+											<input class="form-control input-md m-b-s inline" name="supervisor_last_name" ng-model="employee.supervisor_last_name" placeholder="Smith"/>
 										</div>
 										<div class="col-sm-3">
 											<label for="supervisor_email">Supervisor Email:</label><br>
-											<span class="m-b-s inline">{{employee.supervisor_email}}</span>
+											<input class="form-control input-md m-b-s inline" name="supervisor_email" ng-model="employee.supervisor_email" placeholder="example@gmail.com"/>
 										</div>
 										<div class="col-sm-3">
 											<label for="supervisor_employee_id">Supervisor Employee Id:</label><br>
-											<span class="m-b-s inline">{{supervisor_employee_id}}</span>
+											<input class="form-control input-md m-b-s inline" name="supervisor_employee_id" ng-model="employee.supervisor_employee_id" placeholder="12"/>
 										</div>
 									</div>
 								</div>
@@ -246,13 +246,12 @@
 									<div class="col-sm-3">
 										<label for="hire_date">Hire Date:</label><br>
 										<!-- <input class="form-control input-sm m-b-s inline" name="hire_date" ng-model="employee.hire_date" placeholder="01/03/17"/><br> -->
-										<!-- <div class="input-group input-md" moment-picker="employee.hire_date" min-view="month" max-view="month" format="MM-DD-YY"> 
+										<div class="input-group input-md" moment-picker="employee.hire_date" min-view="month" max-view="month" format="MM-DD-YY"> 
 										    <span class="input-group-addon">
 										        <i class="fa fa-calendar"></i>
 										    </span>
 										    <input class="form-control" placeholder="Select a date" ng-model="employee.hire_date" ng-model-options="{ updateOn: 'blur' }" />
-										</div> -->
-										<span class="m-b-s inline">{{employee.hire_date}}</span>
+										</div>
 									</div>
 									<div class="col-sm-3">
 										<label for="termination_code">Termination Code:</label><br>
@@ -261,64 +260,66 @@
 									<div class="col-sm-3">
 										<label for="termination_date">Termination Date:</label><br>
 										<!-- <input class="form-control input-sm m-b-s inline" name="termination_date" ng-model="employee.termination_date" placeholder="00129124"/><br> -->
-										<!-- <div class="input-group input-md" moment-picker="employee.termination_date" min-view="month" max-view="month" format="MM-DD-YY"> 
+										<div class="input-group input-md" moment-picker="employee.termination_date" min-view="month" max-view="month" format="MM-DD-YY"> 
 										    <span class="input-group-addon">
 										        <i class="fa fa-calendar"></i>
 										    </span>
 										    <input class="form-control" placeholder="Select a date" ng-model="employee.termination_date" ng-model-options="{ updateOn: 'blur' }" />
-										</div> -->
-										<span class="m-b-s inline">{{employee.termination_date}}</span>
+										</div>
 									</div>
 									<div class="col-sm-3">
 										<label for="employment_status">Employment Status:</label><br>
-										<span class="m-b-s inline">{{employee.employment_status}}</span>
+										<input class="form-control input-sm m-b-s inline" name="employment_status" ng-model="employee.employment_status" placeholder="B"/><br>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-sm-3">
 										<label for="group_account_name">Group Account Name:</label><br>
-										<span class="m-b-s inline">{{group_account_name}}</span>
+										<input class="form-control input-sm m-b-s inline" name="group_account_name" ng-model="employee.group_account_id" placeholder="12"/><br>
+
 									</div>
 									<div class="col-sm-3">
 										<label for="vehicle-license">Car Pool Number:</label><br>
-										<span class="m-b-s inline">{{employee.car_pool_number}}</span>
+										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.car_pool_number" placeholder="32"/><br>
 									</div>
 									<div class="col-sm-3">
 										<label for="ada_certificate_number">ADA Certificate Number:</label><br>
-										<!-- <input class="form-control input-sm m-b-s inline" name="ada_certificate_number" ng-model="employee.ada_certificate_number" placeholder="32"/><br> -->
-										<span class="m-b-s inline">{{employee.ada_certificate_number}}</span>
+										<input class="form-control input-sm m-b-s inline" name="ada_certificate_number" ng-model="employee.ada_certificate_number" placeholder="32"/><br>
 									</div>
 									<div class="col-sm-3">
 										<label for="ada_cerificate_expiration_date">ADA Expiration Date:</label><br>
 										<!-- <input class="form-control input-sm m-b-s inline" name="ada_cerificate_expiration_date" ng-model="employee.ada_cerificate_expiration_date" placeholder="01/02/2009"/><br> -->
-										<!-- <div class="input-group input-md" moment-picker="employee.ada_cerificate_expiration_date" min-view="month" max-view="month" format="MM-DD-YY"> 
+										<div class="input-group input-md" moment-picker="employee.ada_cerificate_expiration_date" min-view="month" max-view="month" format="MM-DD-YY"> 
 										    <span class="input-group-addon">
 										        <i class="fa fa-calendar"></i>
 										    </span>
 										    <input class="form-control" placeholder="Select a date" ng-model="employee.ada_cerificate_expiration_date" ng-model-options="{ updateOn: 'blur' }" />
-										</div> -->
-										<span class="m-b-s inline">{{employee.ada_cerificate_expiration_date}}</span>
+										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-sm-3">
 										<label for="vehicle-license">Employment Type:</label><br>
-										<span class="m-b-s inline">{{employee.employment_type}}</span>
+										<input class="form-control input-sm m-b-s inline" name="employment_type" ng-model="employee.employment_type" placeholder="A3"/><br>
 									</div>
 									<div class="col-sm-3">
 										<label for="prim_email_address">Primary Email:</label><br>
-										<span class="m-b-s inline">{{employee.email_address}}</span>
+										<input type="email"  class="form-control input-sm m-b-s inline" name="prim_email_address" ng-model="employee.email_address" placeholder="example@gmail.com"/><br>
 									</div>
+									<!-- <div class="col-sm-3">
+										<label for="vehicle-license">Secondary Email:</label><br>
+										<input class="form-control input-sm m-b-s inline" name="vehicle-license" ng-model="employee.vehicle_license" placeholder="32"/><br>
+									</div> -->
 									<div class="col-sm-3">
 										<label for="mobile_number">Mobile:</label><br>
-										<span class="m-b-s inline">{{employee.mobile_number}}</span>
+										<input class="form-control input-sm m-b-s inline" name="mobile_number" ng-model="employee.mobile_number" placeholder="222-021-1234"/><br>
 									</div>
 								</div>
-								<!-- <div class="row">
+								<div class="row">
 									<div class="col-sm-12 m-t-m">
 										<button class="btn btn-primary" ng-disabled="hr_employee_form.$pristine || hr_employee_form.$invalid" ng-click="updateEmployee()">Update</button>
 									</div>
-								</div> -->
+								</div>
 							</form>
 					    </div> <!-- END OF TAB -->
 					    <div class="tab-pane fade" ng-class="{'active in': tab == 4}">
